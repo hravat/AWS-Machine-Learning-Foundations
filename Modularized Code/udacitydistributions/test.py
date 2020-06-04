@@ -1,4 +1,4 @@
-# Any changes to the distributions library should be reinstalled with
+# Any changes to the udacitydistributions library should be reinstalled with
 #  pip install --upgrade .
 
 # For running unit tests, use
@@ -6,29 +6,36 @@
 
 import unittest
 
-from distributions import Gaussian
-from distributions import Binomial
+from udacitydistributions import Gaussian
+from udacitydistributions import Binomial
 
 class TestGaussianClass(unittest.TestCase):
     def setUp(self):
         self.gaussian = Gaussian(25, 2)
         self.gaussian.read_data_file('numbers.txt')
+        print('---------GAUSSIAN SETUP SUCCESFUL---------')
+
 
     def test_initialization(self): 
         self.assertEqual(self.gaussian.mean, 25, 'incorrect mean')
         self.assertEqual(self.gaussian.stdev, 2, 'incorrect standard deviation')
+        print('----GAUSSIAN MEAN & STDEV INITIALIZATION SUCCESFUL----')
 
     def test_readdata(self):
         self.assertEqual(self.gaussian.data,\
          [1, 3, 99, 100, 120, 32, 330, 23, 76, 44, 31], 'data not read in correctly')
+        print('----GAUSSIAN DATA READ SUCCESFUL----')
 
     def test_meancalculation(self):
         self.assertEqual(self.gaussian.calculate_mean(),\
          sum(self.gaussian.data) / float(len(self.gaussian.data)), 'calculated mean not as expected')
+        print('----GAUSSIAN MEAN CALCULATION SUCCESFUL----')
 
     def test_stdevcalculation(self):
         self.assertEqual(round(self.gaussian.calculate_stdev(), 2), 92.87, 'sample standard deviation incorrect')
         self.assertEqual(round(self.gaussian.calculate_stdev(0), 2), 88.55, 'population standard deviation incorrect')
+        print('----GAUSSIAN STANDARD DEVIATION CALCULATION SUCCESFUL----')
+
 
     def test_pdf(self):
         self.assertEqual(round(self.gaussian.pdf(25), 5), 0.19947,\
@@ -36,7 +43,8 @@ class TestGaussianClass(unittest.TestCase):
         self.gaussian.calculate_mean()
         self.gaussian.calculate_stdev()
         self.assertEqual(round(self.gaussian.pdf(75), 5), 0.00429,\
-        'pdf function after calculating mean and stdev does not give expected result')      
+        'pdf function after calculating mean and stdev does not give expected result')
+        print('----GAUSSIAN PDF CALCULATION SUCCESFUL----')
 
     def test_add(self):
         gaussian_one = Gaussian(25, 3)
@@ -45,32 +53,39 @@ class TestGaussianClass(unittest.TestCase):
         
         self.assertEqual(gaussian_sum.mean, 55)
         self.assertEqual(gaussian_sum.stdev, 5)
-        
+        print('----GAUSSIAN ADDITION SUCCESFUL----')
+
 class TestBinomialClass(unittest.TestCase):
     def setUp(self):
         self.binomial = Binomial(0.4, 20)
         self.binomial.read_data_file('numbers_binomial.txt')
+        print('---------BINOMIAL SETUP SUCCESFUL---------')
 
     def test_initialization(self):
         self.assertEqual(self.binomial.p, 0.4, 'p value incorrect')
         self.assertEqual(self.binomial.n, 20, 'n value incorrect')
+        print('----BINOMIAL MEAN & STDEV INITIALIZATION SUCCESFUL----')
 
     def test_readdata(self):
         self.assertEqual(self.binomial.data,\
          [0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0], 'data not read in correctly')
+        print('----BINOMIAL DATA READ SUCCESFUL----')
     
     def test_calculatemean(self):
         mean = self.binomial.calculate_mean()
         self.assertEqual(mean, 8)
-    
+        print('----BINOMIAL MEAN CALCULATION SUCCESFUL----')
+
     def test_calculatestdev(self):
         stdev = self.binomial.calculate_stdev()
         self.assertEqual(round(stdev,2), 2.19)
+        print('----BINOMIAL STANDARD DEVIATION CALCULATION SUCCESFUL----')
         
     def test_replace_stats_with_data(self):
         p, n = self.binomial.replace_stats_with_data()
         self.assertEqual(round(p,3), .615)
         self.assertEqual(n, 13)
+        print('----BINOMIAL REPLACE STATS WITH SUCCESFUL----')
         
     def test_pdf(self):
         self.assertEqual(round(self.binomial.pdf(5), 5), 0.07465)
@@ -79,6 +94,7 @@ class TestBinomialClass(unittest.TestCase):
         self.binomial.replace_stats_with_data()
         self.assertEqual(round(self.binomial.pdf(5), 5), 0.05439)
         self.assertEqual(round(self.binomial.pdf(3), 5), 0.00472)
+        print('----BINOMIAL PDF CALCULATION SUCCESFUL----')
 
     def test_add(self):
         binomial_one = Binomial(.4, 20)
@@ -87,7 +103,7 @@ class TestBinomialClass(unittest.TestCase):
         
         self.assertEqual(binomial_sum.p, .4)
         self.assertEqual(binomial_sum.n, 80)
-        
+        print('----BINOMIAL ADDITION SUCCESFUL----')
     
 if __name__ == '__main__':
     unittest.main()

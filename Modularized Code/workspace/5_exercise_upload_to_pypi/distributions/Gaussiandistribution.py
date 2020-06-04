@@ -149,7 +149,7 @@ class Gaussian(Distribution):
 		
 	def __add__(self, other):
 		
-		"""Function to add together two Gaussian distributions
+		"""Function to add together two Gaussian udacitydistributions
 		
 		Args:
 			other (Gaussian): Gaussian instance
